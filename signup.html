@@ -1,46 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Aeroblox - Sign Up</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <title>Sign Up - Aeroblox</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<h1>Create Aeroblox Account</h1>
+<h1>Create Account</h1>
 
+<input id="username" placeholder="Username">
+<br>
+<input id="dob" type="date">
+<br>
 <input id="email" placeholder="Email">
-<br><br>
-<input id="password" type="password" placeholder="Password">
-<br><br>
+<br>
+<input id="password" type="password">
+<br>
 
 <button id="signupBtn">Sign Up</button>
 
-<p><a href="/login.html">Already have an account? Login</a></p>
-
 <script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js"
-
-const supabase = createClient(
-  "https://zsifxhrjlvwqiuupdxhh.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzaWZ4aHJqbHZ3cWl1dXBkeGhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2ODUzNDUsImV4cCI6MjA5NDI2MTM0NX0.epocEGg42xWvA16Moyj6mYUNIm7NW0rvnI5t9NScULg"
-)
+import { supabase } from "js/supabase.js"
 
 document.getElementById("signupBtn").onclick = async () => {
+
+  const username = document.getElementById("username").value
+  const dob = document.getElementById("dob").value
   const email = document.getElementById("email").value
   const password = document.getElementById("password").value
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password
   })
 
   if (error) {
     alert(error.message)
-  } else {
-    alert("Check your email to confirm your account!")
-    window.location.href = "/login.html"
+    return
   }
+
+  await supabase.from("profiles").insert({
+    id: data.user.id,
+    username,
+    date_of_birth: dob
+  })
+
+  window.location.href = "login.html"
 }
 </script>
 
