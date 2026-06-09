@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aeroblox - Sign Up</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<h1>Create Aeroblox Account</h1>
+
+<input id="email" placeholder="Email">
+<br><br>
+<input id="password" type="password" placeholder="Password">
+<br><br>
+
+<button id="signupBtn">Sign Up</button>
+
+<p><a href="/login.html">Already have an account? Login</a></p>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js"
+
+const supabase = createClient(
+  "https://zsifxhrjlvwqiuupdxhh.supabase.co",
+  "YOUR_ANON_KEY"
+)
+
+document.getElementById("signupBtn").onclick = async () => {
+  const email = document.getElementById("email").value
+  const password = document.getElementById("password").value
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password
+  })
+
+  if (error) {
+    alert(error.message)
+  } else {
+    alert("Check your email to confirm your account!")
+    window.location.href = "/login.html"
+  }
+}
+</script>
+
+</body>
+</html>
