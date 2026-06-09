@@ -1,0 +1,28 @@
+body {
+  font-family: Arial;
+  background: #eaf3ff;
+  margin: 0;
+}
+
+#topbar {
+  background: linear-gradient(#5bb5ff, #2f7ed9);
+  padding: 8px;
+  color: white;
+}
+
+#topbar a {
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+
+#subbar {
+  background: #d6e9ff;
+  padding: 5px;
+  border-bottom: 1px solid #aaa;
+}
+
+#subbar a {
+  margin-right: 10px;
+  color: #003a75;
+}
